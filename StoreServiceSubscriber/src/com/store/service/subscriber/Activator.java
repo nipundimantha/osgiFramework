@@ -38,15 +38,14 @@ public class Activator implements BundleActivator {
 			password = myscanner.next();
 			
 		//CHECK USERNAME AND PASSWORD
-		if(userName.equalsIgnoreCase("pharmacy") && password.equalsIgnoreCase("pha#2020")) {
+		if(userName.equalsIgnoreCase("store") && password.equalsIgnoreCase("123")) {
 		 
 		 //DEFINE AREA
-		// Medicine medi = new Medicine();
-		 StoreService pharmacyService = new StoreServiceImpl();
+		 StoreService storeService = new StoreServiceImpl();
 		 
 		 System.out.println("------- Welcome to Auto Miraj Store System ---------");
 		  int i =0;
-		  //START PHARMACY SYSTEM SYSTEM
+		  //START STORE SYSTEM SYSTEM
 		  do {
 		
 		 //DISPLAY OPTIONS
@@ -56,30 +55,30 @@ public class Activator implements BundleActivator {
 		  //GET INPUT AND OUTPUT
 		  int option = myscanner.nextInt();	
 		  
-		  //SELECT OPTION 01 => PURCHES MEDICINE
+		  //SELECT OPTION 01 => PURCHES EQUIPMENTS
 		  if(option == 1) {
 			  
 			  System.out.print("Please Enter the Customer Name - ");
-			  String patientName = myscanner.next();
-			  //CALL ADD PATIENTS METHOD
-			  service.addCustomers(patientName);
+			  String customerName = myscanner.next();
+			  //CALL ADD CUSTOMER METHOD
+			  service.addCustomers(customerName);
 			  
 			  int j=0;
-			  //START ADD MEDICINE
+			  //START ADD UPGRADES
 			  do {
 			  System.out.print("Please Enter the Upgrade Name - ");
-			  String medicineName = myscanner.next();
+			  String upgradeName = myscanner.next();
 			  
 			  System.out.print("Please Enter the Upgrade Dose - ");
-			  String medicineDose = myscanner.next();
+			  String nextFix = myscanner.next();
 			  
 			  System.out.print("Please Enter the Spare Parts Price - ");
-			  int medicinePrice = myscanner.nextInt();
+			  int equipedPrice = myscanner.nextInt();
 			  
 			  System.out.print("Please Enter the Spare Parts Count - ");
-			  int medicineCount = myscanner.nextInt();
+			  int qty = myscanner.nextInt();
 			  //CALL PURCHESMEDICINE
-			  service.purchesUpgrades(medicineName,medicineDose,medicinePrice,medicineCount); 
+			  service.purchesUpgrades(upgradeName,nextFix,equipedPrice,qty); 
 			  
 			  //ADD ANOTHER MEDICINE 
 			  System.out.print("Do you want to upgrade?(Y or N) - ");

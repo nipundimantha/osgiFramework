@@ -1,36 +1,29 @@
 package com.admin.service.publisher;
 
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.nio.file.OpenOption;
-import java.rmi.activation.Activator;
+import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Scanner;
-import java.util.Set;
 
 public class AdminServiceImpl implements AdminService {
 
 	List<String> newCustomer = new ArrayList<>();
 	ArrayList<Customer>customers = new ArrayList<Customer>();
 
-	int selectedDoc ;
-	int patientIndex = 1;
+	int selectedTechnician ;
+	int customerIndex = 1;
 	int ID=0;
 
 	@Override
-	//DISPALY DOCTORS LIST
+	//DISPALY TECHNICIAN LIST
 	public int getTechList() {
 		Scanner customerScanner = new Scanner(System.in);
 		int i = 5;
 		
-		System.out.println("\t1. General Technician  - Mr.B.G.N.Rathnasena");
+		System.out.println("\t1.General Technician  - Mr.B.G.N.Rathnasena");
 		System.out.println("\t2.Hybrid Technician  - Mr.Chandima Amarasena");
 		System.out.println("\t3.Electrical Technician - Mr.H.K.De S.Kularatne ");
 		System.out.println("\t4.Assistant Technician - Mr.WAS De Silva");
@@ -40,13 +33,13 @@ public class AdminServiceImpl implements AdminService {
 			i++;
 		}
 		System.out.print("\n\tEnter Technician's index number : ");
-		selectedDoc = customerScanner.nextInt();
-		return selectedDoc;
+		selectedTechnician = customerScanner.nextInt();
+		return selectedTechnician;
 		
 	}
 
 	@Override
-	//ADDING DOCTORS TO THE LIST
+	//ADDING TECHNICIANS TO THE LIST
 	public void addTechnician() {
 		Scanner addCustomerScanner = new Scanner(System.in);
 		
@@ -72,19 +65,20 @@ public class AdminServiceImpl implements AdminService {
 	}
 
 	@Override
-	//REGISTER PATIENT
-	public void registerCustomer(String name, String age, int telephone, String Address) {
-		// TODO Auto-generated method stub
+	//REGISTER CUSTOMER
+	public void registerCustomer(String name, int telephone, String address, String vehicalNumber,String vehicalType) {
+
 		System.out.println("\n\t----- new customer details -----");
-		System.out.println("  \tXXX Service station Administration  ");
+		System.out.println("  \tAuto Miraj Service station Administration  ");
 		System.out.println("\n \t \t CUSTOMER DETAILS :");
-		customers.add(new Customer(ID, name, age, telephone, Address));
+		customers.add(new Customer(ID, name, telephone, address, vehicalType, vehicalNumber));
 		ID = ID +1;
 		
 		System.out.println("\tCustomer Name      :- " + name);
-		System.out.println("\tCustomer Age       :- " + age+" years");
 		System.out.println("\tCustomer Telephone :- "+telephone);
-		System.out.println("\tCustomer Address   :- "+Address);
+		System.out.println("\tCustomer Address   :- "+address);
+		System.out.println("\tVehicle Type     	 :- " + vehicalType);
+		System.out.println("\tVehicle Number     :- " + vehicalNumber);
 		
 		System.out.println("\n \t Customer Added Successfully!!!\n");
 		
@@ -92,18 +86,18 @@ public class AdminServiceImpl implements AdminService {
 
 	@Override
 	//CALCULATE BALANCE
-	public double calculateHire(int type, double paymant, double docCharge) {
+	public double calculateHire(int type, double paymant, double tecCharge) {
 		double balance = 0;
 		if (type == 1) {
-			balance = paymant -docCharge;
+			balance = paymant -tecCharge;
 			
 		}
 		if (type == 2) {
-			balance = paymant -docCharge;
+			balance = paymant -tecCharge;
 			
 		}
 		if (type == 3) {
-			balance = paymant -docCharge;
+			balance = paymant -tecCharge;
 			
 		}
 		
@@ -112,20 +106,19 @@ public class AdminServiceImpl implements AdminService {
 
 	@Override
 	
-	public void printChargingBill(int patientIndex, String patientName,String docName,double clannelingFee,double bal) {
+	public void printChargingBill(int customerIndex, String customerName,String tecName,double hire,double bal) {
 		try {
 			
-			
-			
 			FileWriter fileWriter = new FileWriter("D:\\channelingbill.txt");
+			Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 			PrintWriter printWriter = new PrintWriter(fileWriter);
 			printWriter.println("\n\t====================================================");
 			printWriter.println("\t -Hiring Details-");
-			printWriter.println("customer no : " + patientIndex);
-			printWriter.println("customer name :" + patientName);
-			printWriter.println("Technician name : " + docName );
-			printWriter.println("time and Venue : " + "2020/3/15 - 4.00pm");
-			printWriter.println("Total charge :" + clannelingFee);
+			printWriter.println("customer no : " + customerIndex);
+			printWriter.println("customer name :" + customerName);
+			printWriter.println("Technician name : " + tecName );
+			printWriter.println("time and Venue : " + timestamp);
+			printWriter.println("Total charge :" + hire);
 			printWriter.println("balance :" + bal );
 			printWriter.println("\t====================================================\n");
 			printWriter.close();
@@ -140,25 +133,25 @@ public class AdminServiceImpl implements AdminService {
 	
 	@Override
 	//CREATING BILL INFORMATION
-	public void createTechHireDetails(int type, String pName,String docName,double docCharge,double amount,int patientIndex) {
+	public void createTechHireDetails(int type, String customerName,String tecName,double tecCharge, double amount,int customerIndex) {
+		Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 		System.out.println("\t========================================");
 		System.out.println("\t\t -Hiring Details-");
-		System.out.println("\tcustomer no : " + patientIndex);
-		System.out.println("\tcustomer name :" + pName);
-		System.out.println("\tTechnician name : " +docName );
+		System.out.println("\tcustomer no : " + customerIndex);
+		System.out.println("\tcustomer name :" + customerName);
+		System.out.println("\tTechnician name : " +tecName );
 		System.out.println("\tPaid");
-		System.out.println("\ttime and Venue : " + " 2020/3/15 - 2.30pm");
-		System.out.println("\tTotal charge :" + docCharge);
-		System.out.println("\tbalance      :" + this.calculateHire(type,amount,docCharge));
+		System.out.println("\ttime and Venue : " + timestamp);
+		System.out.println("\tTotal charge :" + tecCharge);
+		System.out.println("\tbalance      :" + this.calculateHire(type,amount,tecCharge));
 		System.out.println("\t========================================");
 		
 		
 	}
 
 	@Override
-	//GET ALL REGISTERED PATIENTS AND DISPLY
+	//GET ALL REGISTERED CUSTOMERS AND DISPLAY
 	public void allCustomers(double tot) {
-		// TODO Auto-generated method stub
 		System.out.println("\n\t==============Patient History================");
 		System.out.println("\t Customer Name \t\t\t Address");
 		for(int i=0 ; i < customers.size();i++) {

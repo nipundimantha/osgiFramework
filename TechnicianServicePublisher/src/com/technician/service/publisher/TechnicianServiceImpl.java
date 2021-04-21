@@ -8,30 +8,21 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 public class TechnicianServiceImpl implements TechnicianService{
-	ArrayList<CertifiedUpgrade>medicine = new ArrayList<CertifiedUpgrade>();
-	ArrayList<String>medicineDosage = new ArrayList<String>();
+	ArrayList<CertifiedUpgrade>upgrades = new ArrayList<CertifiedUpgrade>();
+	ArrayList<String>upgradeNextFix = new ArrayList<String>();
 	ArrayList<String>duration = new ArrayList<String>();
 	ArrayList<String>dailySummary = new ArrayList<String>();
 	ArrayList<String>test = new ArrayList<String>();
 	
 	int count = 0;
-	
-	
-	
-	
 
 	@Override
-	public void prescribeMedicine(String name, String dose, String dur) {
-		// TODO Auto-generated method stub
-		 medicine.add(new CertifiedUpgrade(name, dur, dose)); 
-//		medicineName.add(name);
-//		medicineDosage.add(dose);
-//		duration.add(dur);
-		
+	public void upgradeNextFix(String name, String nextFix, String dur) {
+		 upgrades.add(new CertifiedUpgrade(name, dur, nextFix));
 	}
 
 	@Override
-	public void prescribeTest(String tName) {
+	public void nextFixTest(String tName) {
 		test.add(tName);
 	}
 
@@ -46,36 +37,33 @@ public class TechnicianServiceImpl implements TechnicianService{
 			count = dailySummary.size();
 			
 		}
+		
 		System.out.println();
 		System.out.println("-----------------------------------------------------------------------------------");
-		System.out.println("Total number of customers : "+count);
+		System.out.println("Total number of customers : " + count);
 		System.out.println();
 		System.out.println("===================================================================================");
-		
-		
-		
+
 	}
 
 	@Override
-	public void printUpgradeList(String pname, String page, String dname) {
-		// TODO Auto-generated method stub
+	public void printUpgradeList(String customerName, String page, String tecName) {
 		
 		try {
-			File file = new File("F:\\sliit\\y3 s1\\new\\SA\\labs\\generated reports\\prescription.txt");
+			File file = new File("F:\\sliit\\y3 s1\\new\\SA\\labs\\generated reports\\upgrade.txt");
 			
-			
-			FileWriter fileWriter = new FileWriter("F:\\sliit\\y3 s1\\new\\SA\\labs\\generated reports\\prescription.txt");
+			FileWriter fileWriter = new FileWriter("F:\\sliit\\y3 s1\\new\\SA\\labs\\generated reports\\upgrade.txt");
 			PrintWriter printWriter = new PrintWriter(fileWriter);
 			printWriter.println("===========================Upgrade Prescription============================");
 			printWriter.println();
-			printWriter.println("Packaged by : mR.. "+dname);
-			printWriter.println("Customer Name : "+ pname + "                                 age: "+ page + "yr");
+			printWriter.println("Packaged by : MR. "+tecName);
+			printWriter.println("Customer Name : "+ customerName + "                                 " + page);
 			printWriter.println();
 			printWriter.println();
-			printWriter.println("Upgrade                Dosage        Duration"  );
+			printWriter.println("Upgrade                nextFix        Duration"  );
 
-			for(int i = 0; i<= medicine.size()- 1; i++ ) {
-				printWriter.println(medicine.get(i).getName() + "                      " + medicine.get(i).getDose() + "              " + medicine.get(i).getDuration());
+			for(int i = 0; i<= upgrades.size()- 1; i++ ) {
+				printWriter.println(upgrades.get(i).getName() + "                      " + upgrades.get(i).getNextFix() + "              " + upgrades.get(i).getDuration());
 			}
 			printWriter.println("");
 			printWriter.println("============================================================================");
@@ -83,7 +71,6 @@ public class TechnicianServiceImpl implements TechnicianService{
 			
 			
 		}catch (IOException e) {
-			// TODO: handle exception
 			System.out.println("An error occured");
 		}
 		
@@ -94,14 +81,13 @@ public class TechnicianServiceImpl implements TechnicianService{
 
 	@Override
 	public void printTestPrescription(String pname, String page, String dname) {
-		// TODO Auto-generated method stub
 		try {
-		FileWriter fileWriter = new FileWriter("F:\\sliit\\y3 s1\\new\\SA\\labs\\generated reports\\prescriptiontest.txt");
+		FileWriter fileWriter = new FileWriter("F:\\sliit\\y3 s1\\new\\SA\\labs\\generated reports\\Test.txt");
 		PrintWriter printWriter = new PrintWriter(fileWriter);
 		printWriter.println("===========================Test Prescription============================");
 		printWriter.println();
 		printWriter.println("Packaged by: Mr. "+dname);
-		printWriter.println("Customer Name : "+ pname + "                                 age: "+ page+ " yr");
+		printWriter.println("Customer Name : "+ pname + "                                  "+ page);
 		printWriter.println();
 		
 		
@@ -115,7 +101,6 @@ public class TechnicianServiceImpl implements TechnicianService{
 		printWriter.close();
 		
 		}catch (IOException e) {
-			// TODO: handle exception
 			System.out.println("An error has occured");
 		}
 		
@@ -123,35 +108,28 @@ public class TechnicianServiceImpl implements TechnicianService{
 		System.out.println();
 	}
 
-	
-
 	@Override
-	public void viewMedicinePrescription(String pname, String page, String dname) {
+	public void viewNextFixPoint(String customerName, String page, String tecName) {
 		System.out.println("===========================Upgrade Prescription============================");
 		System.out.println();
-		System.out.println("Packaged by : Mr. "+dname);
-		System.out.println("Customer Name : "+ pname + "                                 age: "+ page + "yr");
+		System.out.println("Packaged by : Mr. "+tecName);
+		System.out.println("Customer Name : "+ customerName + "                                 "+ page);
 		System.out.println();
-		System.out.println("Upgrade                Dosage        Duration");
-		for(int i = 0; i<= medicine.size()- 1; i++ ) {
-			System.out.println(medicine.get(i).getName() + "                      " + medicine.get(i).getDose() + "             " + medicine.get(i).getDuration());
+		System.out.println("Upgrade                nextFix        Duration");
+		for(int i = 0; i<= upgrades.size()- 1; i++ ) {
+			System.out.println(upgrades.get(i).getName() + "                      " + upgrades.get(i).getNextFix() + "             " + upgrades.get(i).getDuration());
 		}
 		System.out.println();
 		System.out.println("============================================================================");
-
-		
-		
 		
 	}
 
-
-
 	@Override
-	public void viewPrescribedtest(String pname, String page, String dname) {
+	public void viewUpgradedTest(String customerName, String page, String tecName) {
 		System.out.println("===========================Test Prescription============================");
 		System.out.println();
-		System.out.println("Packaged by: Mr. "+dname);
-		System.out.println("Customer Name : "+ pname + "                                 age: "+ page+ " yr");
+		System.out.println("Packaged by: Mr. "+tecName);
+		System.out.println("Customer Name : "+ customerName + "                                " + page);
 		System.out.println();
 		
 		for(int i = 0; i<= test.size()-1; i++ ) {
@@ -165,36 +143,30 @@ public class TechnicianServiceImpl implements TechnicianService{
 	}
 
 	@Override
-	public void clearMedicinePrescription() {
-		// TODO Auto-generated method stub
-		medicine.clear();
-//		medicineDosage.clear();
-//		duration.clear();
-//		
+	public void clearUpgradeNextFix() {
+		upgrades.clear();
 	}
 
 	@Override
-	public void clearTestPrescription() {
-		// TODO Auto-generated method stub
+	public void clearUpgradeTestNextFix() {
 		test.clear();
 		
 	}
 
 	@Override
-	public void keepCustomerSummary(String pname) {
-		// TODO Auto-generated method stub
+	public void keepCustomerSummary(String customerName) {
 		if(!dailySummary.isEmpty()) {
 			int last = dailySummary.size() - 1;
 			String previous = dailySummary.get(last);
 			
-			if(!previous.equals(pname)) {
-				dailySummary.add(pname);
+			if(!previous.equals(customerName)) {
+				dailySummary.add(customerName);
 			}
 			
 		}
 		
 		else {
-			dailySummary.add(pname);
+			dailySummary.add(customerName);
 		}
 			
 	}

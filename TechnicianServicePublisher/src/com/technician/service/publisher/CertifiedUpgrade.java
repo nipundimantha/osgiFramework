@@ -4,13 +4,13 @@ public class CertifiedUpgrade {
 
 	private String name;
 	private String duration;
-	private String dose;
+	private String nextFix;
 	
 	public CertifiedUpgrade(String name, String duration, String dose) {
 		super();
 		this.name = name;
 		this.duration = duration;
-		this.dose = dose;
+		this.nextFix = dose;
 	}
 
 	public String getName() {
@@ -29,12 +29,12 @@ public class CertifiedUpgrade {
 		this.duration = duration;
 	}
 
-	public String getDose() {
-		return dose;
+	public String getNextFix() {
+		return nextFix;
 	}
 
-	public void setDose(String dose) {
-		this.dose = dose;
+	public void setNextFix(String dose) {
+		this.nextFix = dose;
 	}
 	
 	

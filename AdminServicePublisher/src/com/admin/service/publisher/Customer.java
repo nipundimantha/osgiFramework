@@ -4,27 +4,16 @@ public class Customer {
 	
 	int id;
 	String name;
-	String age;
 	int telephone;
 	String address;
 	String vehicalNumber;
 	String vehicalType;
 	
-	public Customer(int id, String name, String age, int telephone, String address) {
-		super();
-		this.id = id;
-		this.name = name;
-		this.age = age;
-		this.telephone = telephone;
-		this.address = address;
-	}
-	
-	public Customer(int id, String name, String age, int telephone, String address, String vehicalNumber,
+	public Customer(int id, String name, int telephone, String address, String vehicalNumber,
 			String vehicalType) {
 		super();
 		this.id = id;
 		this.name = name;
-		this.age = age;
 		this.telephone = telephone;
 		this.address = address;
 		this.vehicalNumber = vehicalNumber;
@@ -42,12 +31,6 @@ public class Customer {
 	}
 	public void setName(String name) {
 		this.name = name;
-	}
-	public String getAge() {
-		return age;
-	}
-	public void setAge(String age) {
-		this.age = age;
 	}
 	public int getTelephone() {
 		return telephone;

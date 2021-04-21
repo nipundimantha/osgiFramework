@@ -4,7 +4,7 @@ package com.checkpoint.service.publisher;
 
 public class Checkpoint {
 	
-	public String labtestType, customerName, labservicetype;
+	public String labtestType, customerName, checkpointServicetype;
 	public double rand;
 	
 	public Checkpoint(String labtestType) {	

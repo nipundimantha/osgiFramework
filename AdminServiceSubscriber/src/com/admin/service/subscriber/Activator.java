@@ -31,18 +31,18 @@ public class Activator implements BundleActivator {
 		AdminService adminService = new AdminServiceImpl(); 
 		Scanner myScanner = new Scanner(System.in);	
 		
-		int selectedDoc ;
-		int patientIndex = 1;
+		int selectedTec ;
+		int customerIndex = 1;
 		int loop = 1;
 		double totIncome = 0;
 		
-		
+		System.out.println(" Admin Service Subscriber Start");
 		System.out.println("\n\t============= Welcome to Auto Miraj Service Station ==============");
 		int i = 0;
 		//MAIN SYSTEM START
 		do {
 			//ACCESS CONTROLL
-			System.out.print("\n\tPlease Enter User Name : ");
+			System.out.print("\n\tPlease Enter UserName : ");
 			String un = myScanner.next();
 			
 			System.out.print("\tPlease Enter Password : ");
@@ -62,41 +62,42 @@ public class Activator implements BundleActivator {
 			
 			double bal = 0;
 			
-			//OPTION 1 -> PATIENT REGISTRATION
+			//OPTION 1 -> CUSTOMER REGISTRATION
 			if(option == 1 ) {
 				System.out.print("\n\tPlease enter customer name : ");
-				String patientName = myScanner.next();
-				
-				System.out.print("\tPlease enter customer age : ");
-				String patientAge = myScanner.next();
+				String customerName = myScanner.next();
 				
 				System.out.print("\tPlease enter customer Telephone : ");
-				int patientTelephone = myScanner.nextInt();
+				int customerMSISDN = myScanner.nextInt();
 				
 				System.out.print("\tPlease enter customer address : ");
-				String patientAddress = myScanner.next();
+				String customerAddress = myScanner.next();
+				
+				System.out.print("\tPlease enter customer vehicle Number : ");
+				String customerVehicleNumber = myScanner.next();
+				
+				System.out.print("\tPlease enter customer vehicle Type : ");
+				String customerVehicleType = myScanner.next();
 	
-				service.registerCustomer(patientName, patientAge, patientTelephone, patientAddress);
+				service.registerCustomer(customerName, customerMSISDN, customerAddress, customerVehicleNumber,customerVehicleType);
 		
 			}
 				
-
-			//OPTION 2 -> ADD DOCTORS TO THE LIST
+			//OPTION 2 -> ADD TECHNICIAN TO THE LIST
 			else if (option == 2) {
 				service.addTechnician();
 				
 			}
 			
-			//OPTION 3 -> CHANNEL A DOCTOR
+			//OPTION 3 -> HIRE A TECHNICIAN
 			else if(option == 3) {
 				Scanner cash = new Scanner(System.in);
 				System.out.print("\n \tPlease enter customer name : ");
-				String patientName = myScanner.next();
+				String customerName = myScanner.next();
 				System.out.println("\tPlease select Technician : \n");
-				selectedDoc = service.getTechList();
+				selectedTec = service.getTechList();
 				
-				
-				if(selectedDoc == 1) {
+				if(selectedTec == 1) {
 					
 					System.out.println("\n\t==== Selected Technician Charges ====");
 					System.out.println("\tMr.B.G.N.Rathnasena   =  1000.00");
@@ -108,22 +109,18 @@ public class Activator implements BundleActivator {
 					System.out.print("\n\tEnter Paymant :");
 					double amount = cash.nextDouble();
 					
-					
-					service.createTechHireDetails(1,patientName," Dr.B.G.N.Rathnasena",1300,amount,patientIndex);
-					
-
+					service.createTechHireDetails(1,customerName," Dr.B.G.N.Rathnasena",1300,amount,customerIndex);
 					
 					System.out.print("\tDo you want to print the bill (y/n) ?? ");
 					String selection = myScanner.next();
 					
 					if(selection.equals("y") ||selection.equals("Y") ) {
-						service.printChargingBill(patientIndex, patientName," Dr.B.G.N.Rathnasena",1300,bal);
+						service.printChargingBill(customerIndex, customerName," Dr.B.G.N.Rathnasena",1300,bal);
 						System.out.println("\n \tprinted successully");
 					}
 					
-					
 				}
-				else if(selectedDoc == 2) {
+				else if(selectedTec == 2) {
 							System.out.println("\n\t==== Selected Technician Charges ====");
 							System.out.println("\tMr.Chandima Amarasena =  1700.00");
 							System.out.println("\tHiring fee        =   300.00");
@@ -133,23 +130,20 @@ public class Activator implements BundleActivator {
 			
 					System.out.print("\n \tEnter Paymant :");
 					double amount = cash.nextDouble();
-					
-					
-					service.createTechHireDetails(1,patientName,"Mr.Chandima Amarasena",2000,amount,patientIndex);
-				
+							
+					service.createTechHireDetails(1,customerName,"Mr.Chandima Amarasena",2000,amount,customerIndex);
 			
-					
 					System.out.print("\n \tDo you want to print the bill (y/n) ?? ");
 					String selection = myScanner.next();
 					
 					if(selection.equals("y")) {
-						service.printChargingBill(patientIndex, patientName,"Mr.Chandima Amarasena",2000,bal);
+						service.printChargingBill(customerIndex, customerName,"Mr.Chandima Amarasena",2000,bal);
 						System.out.println("\n \t printed successully");
 					}
 					
-					
 				}
-				else if(selectedDoc == 3) {
+				else if(selectedTec == 3) {
+					
 							System.out.println("\n\t==== Selected Technician Charges ====");
 							System.out.println("\tDr.H.K.De S.Kularatne =  1500.00");
 							System.out.println("\tHiring fee        =   300.00");
@@ -161,23 +155,18 @@ public class Activator implements BundleActivator {
 					System.out.print("\n \t Enter Paymant :");
 					double amount = cash.nextDouble();
 					
-					
-					service.createTechHireDetails(1,patientName,"Mr.H.K.De S.Kularatne",1800,amount,patientIndex);
-					
+					service.createTechHireDetails(1,customerName,"Mr.H.K.De S.Kularatne",1800,amount,customerIndex);
 					
 					System.out.print("\n \t Do you want to print the bill (y/n) ?? ");
 					String selection = myScanner.next();
 					
 					if(selection.equals("y")) {
-						service.printChargingBill(patientIndex, patientName,"Mr.H.K.De S.Kularatne",1800,bal);
+						service.printChargingBill(customerIndex, customerName,"Mr.H.K.De S.Kularatne",1800,bal);
 						System.out.println("\n \tprinted successully");
 					}
 					
-					
-					
-					
 				}
-				else if(selectedDoc == 4) {
+				else if(selectedTec == 4) {
 							System.out.println("\n \t==== Selected Technician Charges ====");
 							System.out.println("\t Mr.WAS De Silva       =  1500.00");
 							System.out.println("\t Hiring fee        =   300.00");
@@ -189,33 +178,24 @@ public class Activator implements BundleActivator {
 					System.out.print("\n \tEnter Paymant :");
 					double amount = cash.nextDouble();
 					
-					
-					service.createTechHireDetails(1,patientName,"Mr.WAS De Silva",1800,amount,patientIndex);
-					
+					service.createTechHireDetails(1,customerName,"Mr.WAS De Silva",1800,amount,customerIndex);
 					
 					System.out.print("\tDo you want to print the bill  (y/n) ?? ");
 					String selection = myScanner.next();
 					
 					if(selection.equals("y") || selection.equals("Y")) {
-						service.printChargingBill(patientIndex, patientName,"Mr.WAS De Silva",1800,bal);
+						service.printChargingBill(customerIndex, customerName,"Mr.WAS De Silva",1800,bal);
 						System.out.println("\n \tprinted successully");
 					}
 					
-				
-					
 				}
-				
 			
-				patientIndex++;
-				
-				
-				
+				customerIndex++;
 			}
-			//OPTION 4 -> PATIENT REGISTRATION HISTORY 
+			
+			//OPTION 4 -> CUSTOMER REGISTRATION HISTORY 
 			else if (option == 4) {
 				service.allCustomers(totIncome);
-				
-							
 			}
 			
 			//OPTION 0 -> EXIT
@@ -240,23 +220,21 @@ public class Activator implements BundleActivator {
 				  System.out.println("\t please enter valid letter");
 				}
 			
-			  	}while(i<0);	//ADMINISTRATION SYSTEM ENDS
-		
-			
-		
+			  	} while(i<0);	//ADMINISTRATION SYSTEM ENDS
 		 
 		}
 		else {
-			System.out.println("\n\tAcces Dinied!!");
+			System.out.println("\n\tAcces Denied!!");
 			System.out.print("\tDo you want try again  (-1.Exit , 1.Go Back) ??  ");
 			loop = myScanner.nextInt();
 		}
-		}while(loop > 0);//MAIN SYSTEM ENDS
+		
+		} while(loop > 0);//MAIN SYSTEM ENDS
 	}
 
 	public void stop(BundleContext bundleContext) throws Exception {
 		Activator.context = null;
-		System.out.println("Admin Service Stop");
+		System.out.println("Admin Service Subscriber Stop");
 	}
 
 }

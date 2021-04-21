@@ -21,25 +21,26 @@ public class Activator implements BundleActivator {
 		ServiceReference<CheckpointService>serviceRefrence = context.getServiceReference(CheckpointService.class);
 		CheckpointService service = (CheckpointService) context.getService(serviceRefrence);
 		
-		String MLTname, Password,customerName, techinicianName;
+		String tecName, password,customerName, technicianName, vehicleNumber, vehicleType;
 		int LabserviceType =0 ,patientAge =0, command = 0, printCommand, ContinueCommand;
 		
 		Scanner myscanner = new Scanner(System.in);
-				
 		
+		try {
+			
+
 		System.out.println("========= Welcome to Auto Miraj Checkpoint Service =========");
 		System.out.println("");
 		System.out.println("Please Log in to the Checkpoint");
 		int correct;
 		do {
 			System.out.print("Please enter Checkpoint technician Name : ");
-			MLTname = myscanner.next();
-			
+			tecName = myscanner.next();
 			
 			System.out.print("Please enter password : ");
-			Password = myscanner.next();
+			password = myscanner.next();
 			
-			if(MLTname.equals("MLT") && Password.equals("MLTlog")) {
+			if(tecName.equals("tec") && password.equals("tec")) {
 				System.out.println("");
 				System.out.println("Login Successfull");
 				System.out.println("");
@@ -56,9 +57,9 @@ public class Activator implements BundleActivator {
 			}while(correct != 1);
 			
 				System.out.print("Please enter your Name : ");
-				MLTname = myscanner.next();
+				tecName = myscanner.next();
 				
-				System.out.println("===========================Welcome MLT. "+ MLTname + " =============================== ");
+				System.out.println("===========================Welcome MLT. "+ tecName + " =============================== ");
 				
 				do {
 					System.out.println("Choose your Checkpoint Service number:");
@@ -72,11 +73,15 @@ public class Activator implements BundleActivator {
 						System.out.print("Enter the name of the customer : ");
 						customerName = myscanner.next();
 						
-					
-						System.out.print("Enter the age of the customer : ");
-						patientAge = myscanner.nextInt();
+						System.out.print("Enter the Vehicle Number : ");
+						vehicleNumber = myscanner.next();
+						
+						System.out.print("Enter the Vehicle Type : ");
+						vehicleType = myscanner.next();
+						
 						System.out.print("Enter the name of the Technician : ");
-						techinicianName = myscanner.next();
+						technicianName = myscanner.next();
+						
 						System.out.println("");
 						
 						service.checkpointReportHistory(customerName);
@@ -99,8 +104,7 @@ public class Activator implements BundleActivator {
 									service.selectReportType("Tires & Wheels Grooming");
 								}else if(testtype == 2) {
 									
-									//service.LabTestHistory("
-									Exterior Waxing");
+									//service.LabTestHistory("Exterior Waxing");
 									service.selectReportType("\r\n" + 
 											"Exterior Waxing");
 								}else if(testtype == 3) {
@@ -117,7 +121,7 @@ public class Activator implements BundleActivator {
 									service.selectReportType("Vehicle Inspection");
 								}else if(testtype == 6) {
 									
-								//	service.LabTestHistory("Engine Degreasing");
+								//	service.LabTestHistory("Engine Decreasing");
 									service.selectReportType("Engine Degreasing");
 								}else if (testtype == 7) {
 									
@@ -140,15 +144,12 @@ public class Activator implements BundleActivator {
 									System.out.println(" Please Contact MLT for any other Checkpoint Reports");
 								}
 						
-								
 						System.out.println("Do  you want to add Another Checkpoint service..? ");
 						System.out.println("   Press 1 to continue");
 						System.out.println("   Press 0 to exit from Auto Miraj Checkpoint");
 						command = myscanner.nextInt();
 						
-						
 						}while(command == 1);
-						
 						
 						System.out.println("Do you want to View the Checkpoint Report? ");
 						System.out.println("   1 - yes");
@@ -157,10 +158,9 @@ public class Activator implements BundleActivator {
 						
 						if(ViewCommand == 1) {
 						
-							service.viewCheckpointReport( customerName,  patientAge, techinicianName , MLTname);
+							service.viewCheckpointReport( customerName, vehicleNumber, vehicleType, technicianName, tecName);
 						
 						}
-						
 						
 						System.out.println("Do you want to print the Checkpoint Report? ");
 						System.out.println("   1 - yes");
@@ -168,25 +168,20 @@ public class Activator implements BundleActivator {
 						printCommand = myscanner.nextInt();
 						
 						if(printCommand== 1) {
-							service.reportPrint(customerName,  patientAge, techinicianName , MLTname);
-							
+							service.reportPrint(customerName, vehicleNumber, vehicleType, technicianName, tecName);
 						}
 						
 						service.cleardata();
-						
 						
 					}else if(LabserviceType == 2) {
 						System.out.println("====Auto Miraj Checkpoint Test List====");
 						System.out.println();
 						service.displayReport();
 						
-							
-						
 					}else if(LabserviceType == 3) {
 						System.out.println("=====Welcome to Checkpoint Report Summary====");
 						System.out.println();
 						service.viewCheckpointReportHistory();
-						
 					}
 					
 					else {
@@ -198,11 +193,15 @@ public class Activator implements BundleActivator {
 					System.out.println("   Press 0 to exit from Checkpoint Service");
 					ContinueCommand = myscanner.nextInt();
 					
+				} while(ContinueCommand == 1);
 				
-				}while(ContinueCommand == 1);
+		} catch (Exception e) {
+			System.out.println("Error: " + e);
 			
-			
-			myscanner.close();
+		} finally {
+			System.out.println("Thank you for using checkpoint Consultation Service");
+			System.out.println("Good Bye!....");
+		}
 	}
 
 	public void stop(BundleContext bundleContext) throws Exception {
@@ -210,5 +209,4 @@ public class Activator implements BundleActivator {
 		System.out.println();
 		System.out.println("===========================Auto Miraj Service Stoped===========================");
 	}
-
 }

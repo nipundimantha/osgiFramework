@@ -14,12 +14,7 @@ public class StoreServiceImpl implements StoreService{
 
 	ArrayList<Upgrade>upgrade = new ArrayList<Upgrade>();
 	ArrayList<String> customerBasedList = new ArrayList<String>();
-//	ArrayList<String> medicineNameLst;
-//	ArrayList<String> medicineDoseLst;
 	ArrayList<String> MyInventory = new ArrayList<String>();
-//	ArrayList<Integer> medicineTabletPriceLst;
-//	ArrayList<Integer> medicineTotalPriceLst;
-//	ArrayList<Integer> medicineTabletCount;
 	ArrayList<Integer> TotalIncome = new ArrayList<Integer>();
 	String customerName="";
 	int ID=1;
@@ -28,12 +23,11 @@ public class StoreServiceImpl implements StoreService{
 	 int cash =0;
 	 int balance=0;
 	 Scanner myscanner = new Scanner(System.in);
-	 
 	
 	 @Override
 		public void displayOption() {
 			// DISPLAY THE MAIN MENU
-			  
+			 
 			  System.out.println("1.Issue Upgrade");
 			  System.out.println("2.My Inventory");
 			  System.out.println("3.My History");
@@ -44,7 +38,7 @@ public class StoreServiceImpl implements StoreService{
 	@Override
 	public void getUpgradeList() {
 		
-		// DISPLAY THE PHARMACY INVENTORY
+		// DISPLAY THE STORE INVENTORY
 		System.out.println("===== Upgrade Inventory =====");
 		System.out.println("1. Tyres 165 /70/R13      1tablet = Rs. 25.00");
 		System.out.println("2. Honda Civic Beat Silencer    1tablet = Rs. 30.00");
@@ -77,8 +71,6 @@ public class StoreServiceImpl implements StoreService{
 		  System.out.println("Total - "+tot);
 		  System.out.println("--------------------------");
 		 
-		 		 
-			 
 	}
 	
 	@Override
@@ -86,14 +78,11 @@ public class StoreServiceImpl implements StoreService{
 		// CONSOLE CREATE THE BILL
 		System.out.println("==============Auto Miraj Store================");
 		System.out.println("--------------------YOUR BILL----------------------");
-		  System.out.println("Store" +"         "+"Dose"+"      "+"Price" +  "   " +"Quntity"+"      "+"Total");
-		 
-		 
-		  
+		  System.out.println("Store" +"         "+"NextFix"+"      "+"Price" +  "   " +"Quntity"+"      "+"Total");
 		 
 		  	for(int i=0 ; i < upgrade.size();i++) {
 			  
-		  		 System.out.println(i+1 +"."+upgrade.get(i).getName()+"     "+upgrade.get(i).getDose()+"     "+upgrade.get(i).getPrice()+"      "+upgrade.get(i).getCount()+"		"+upgrade.get(i).getTotal());
+		  		 System.out.println(i+1 +"."+upgrade.get(i).getEquipedName()+"     "+upgrade.get(i).getNextFix()+"     "+upgrade.get(i).getPrice()+"      "+upgrade.get(i).getCount()+"		"+upgrade.get(i).getTotal());
 			 
 		  	}
 		  
@@ -126,8 +115,7 @@ public class StoreServiceImpl implements StoreService{
 		try {
 	//	File file = new File("D:\\pharmacy_bill.txt");
 		
-		
-		FileWriter fileWriter = new FileWriter("D:\\pharmacy_bill.txt");
+		FileWriter fileWriter = new FileWriter("D:\\store_bill.txt");
 		PrintWriter printWriter = new PrintWriter(fileWriter);
 		printWriter.println("===========================STORE BILL============================");
 		printWriter.println("ISSUED BY : Mr. PASAN PRAMUDITHA");
@@ -135,7 +123,7 @@ public class StoreServiceImpl implements StoreService{
 		
 		for(int i=0 ; i < upgrade.size();i++) {
 			  
-			printWriter.println(i+1 +"."+upgrade.get(i).getName()+"     "+upgrade.get(i).getDose()+"     "+upgrade.get(i).getPrice()+"   "+upgrade.get(i).getCount()+"		"+upgrade.get(i).getTotal());
+			printWriter.println(i+1 +"."+upgrade.get(i).getEquipedName()+"     "+upgrade.get(i).getNextFix()+"     "+upgrade.get(i).getPrice()+"   "+upgrade.get(i).getCount()+"		"+upgrade.get(i).getTotal());
 		 
 	  	}
 		
@@ -152,32 +140,25 @@ public class StoreServiceImpl implements StoreService{
 		printWriter.close();
 		
 		
-	}catch (IOException e) {
-		// TODO: handle exception
-		System.out.println("An error occured");
-	}
-		
-
-		
-		
-	}
+		}catch (IOException e) {
+			System.out.println("An error occured");
+		}
 	
+	}
 
 	@Override
-	public void purchesUpgrades(String medicine,String Dose,int price,int count) {
-		// ADD MEDICINE TO BILL
+	public void purchesUpgrades(String upgrades,String nextFix,int price,int count) {
+		// ADD UPGRADES TO BILL
 				
 		  int total = price * count;
 		  TotalIncome.add(total);
-		  upgrade.add(new Upgrade(ID, medicine, Dose, price,count,total));
+		  upgrade.add(new Upgrade(ID, upgrades, nextFix, price,count,total));
 		  ID++;
 	}
 
-	
-
 	@Override
 	public void myHistory() {
-		// DISPLAY PHARMACY HISTORY
+		// DISPLAY STORE HISTORY
 		System.out.println("---------------Auto Miraj Store System History List---------------");
 		if(upgrade.isEmpty()) {
 			System.out.println("History is Empty");
@@ -187,14 +168,13 @@ public class StoreServiceImpl implements StoreService{
 			System.out.println("=========UPGRADE LIST=========");
 			for(int i=0;i<upgrade.size();i++) {
 				
-				System.out.println(i+1+"."+upgrade.get(i).getName());
+				System.out.println(i+1+"."+upgrade.get(i).getEquipedName());
 				
 			}
 			System.out.println("=========DETAILS=========");
 		
 			int totalIncome=0;
 			for(int i=0;i<upgrade.size();i++) {
-				
 			
 				totalIncome = totalIncome + TotalIncome.get(i);
 				
@@ -203,13 +183,11 @@ public class StoreServiceImpl implements StoreService{
 			System.out.println("Customer Count 	-  "+customerBasedList.size());
 			System.out.println("My Total Income -  "+totalIncome);
 		}
-			
 		
 	}
 
 	@Override
 	public void addCustomers(String name) {
-		// TODO Auto-generated method stub
 		customerBasedList.add(name);
 		customerName= name;
 		
@@ -217,7 +195,6 @@ public class StoreServiceImpl implements StoreService{
 
 	@Override
 	public void manageUserBill(int cash) {
-		// TODO Auto-generated method stub
 		this.cash = cash;
 		 balance = cash - tot;
 		 System.out.println("Your balance is - "+ balance);
@@ -227,16 +204,14 @@ public class StoreServiceImpl implements StoreService{
 	}
 
 	@Override
-	public void addUpgradeToMyInventory(String medicineName) {
-		// TODO Auto-generated method stub
-		MyInventory.add(medicineName);
+	public void addUpgradeToMyInventory(String upgradeEquip) {
+		MyInventory.add(upgradeEquip);
 		System.out.println("Upgrade Add Successfully");
 		
 	}
 
 	@Override
 	public void printHistory() {
-		// TODO Auto-generated method stub
 		try {
 			
 			FileWriter fileWriter = new FileWriter("D:\\History.txt");
@@ -247,7 +222,7 @@ public class StoreServiceImpl implements StoreService{
 			printWriter.println("=========Upgrade HISTORY=========");
 			for(int i=0;i<upgrade.size();i++) {
 				
-				printWriter.println(i+1+"."+upgrade.get(i).getName());
+				printWriter.println(i+1+"."+upgrade.get(i).getEquipedName());
 				
 			}
 			printWriter.println("=========DETAILS=========");
@@ -259,7 +234,7 @@ public class StoreServiceImpl implements StoreService{
 				
 			}
 			printWriter.println("----------------------------------------------------------");
-			printWriter.println("Customer Count 	-  "+customerBasedList.size());
+			printWriter.println("Customer Count 	-  " + customerBasedList.size());
 			printWriter.println("My Total Income -  "+totalIncome);
 			
 		  
@@ -270,7 +245,6 @@ public class StoreServiceImpl implements StoreService{
 			
 			
 		}catch (IOException e) {
-			// TODO: handle exception
 			System.out.println("An error occured");
 		}
 			

@@ -2,8 +2,8 @@ package com.store.service.publisher;
 
 public class Upgrade {
 	int id;
-	String Name;
-	String Dose;
+	String equipedName;
+	String nextFix;
 	int price;
 	int count;
 	int total;
@@ -15,21 +15,21 @@ public class Upgrade {
 	public void setId(int id) {
 		this.id = id;
 	}
-
-	public String getName() {
-		return Name;
+	
+	public String getEquipedName() {
+		return equipedName;
 	}
 
-	public void setName(String name) {
-		Name = name;
+	public void setEquipedName(String equipedName) {
+		this.equipedName = equipedName;
 	}
 
-	public String getDose() {
-		return Dose;
+	public String getNextFix() {
+		return nextFix;
 	}
 
-	public void setDose(String dose) {
-		Dose = dose;
+	public void setNextFix(String nextFix) {
+		this.nextFix = nextFix;
 	}
 
 	public int getPrice() {
@@ -56,14 +56,22 @@ public class Upgrade {
 		this.total = total;
 	}
 
-	public Upgrade(int id, String name, String dose, int price, int count, int total) {
+	public Upgrade(int id, String equipedName, String nextFix, int price, int count, int total) {
 		super();
 		this.id = id;
-		Name = name;
-		Dose = dose;
+		this.equipedName = equipedName;
+		this.nextFix = nextFix;
 		this.price = price;
 		this.count = count;
 		this.total = total;
 	}
+
+	@Override
+	public String toString() {
+		return "Upgrade [id=" + id + ", equipedName=" + equipedName + ", nextFix=" + nextFix + ", price=" + price
+				+ ", count=" + count + ", total=" + total + "]";
+	}
+
+	
 	
 }

@@ -13,6 +13,7 @@ public class Activator implements BundleActivator {
 	}
 
 	public void start(BundleContext bundleContext) throws Exception {
+		System.out.println("Store service start");
 		Activator.context = bundleContext;
 		  this.storeRegister();
 	}

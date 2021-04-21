@@ -14,6 +14,7 @@ public class Activator implements BundleActivator {
 	}
 
 	public void start(BundleContext bundleContext) throws Exception {
+		System.out.println(" Admin Service Publisher Start");
 		Activator.context = bundleContext;
 		AdminService adminService =  new AdminServiceImpl();
 		adminreg = bundleContext.registerService(AdminService.class.getName(), adminService, null);
@@ -21,7 +22,7 @@ public class Activator implements BundleActivator {
 
 	public void stop(BundleContext bundleContext) throws Exception {
 		Activator.context = null;
-		System.out.println(" Admin Service Stop");
+		System.out.println(" Admin Service Publisher Stop");
 		adminreg.unregister();
 	}
 

@@ -4,14 +4,14 @@ import java.util.ArrayList;
 
 public interface TechnicianService {
 	
-	public void prescribeMedicine(String name, String dose, String dur);
-	public void viewMedicinePrescription(String pname,String page,String dname);
-	public void prescribeTest(String tName);
-	public void viewPrescribedtest(String pname,String page,String dname);
+	public void upgradeNextFix(String name, String nextFix, String dur);
+	public void viewNextFixPoint(String customerName,String page,String tecName);
+	public void nextFixTest(String tName);
+	public void viewUpgradedTest(String customerName,String page,String tecName);
 	public void viewHistory();
-	public void printUpgradeList(String pname,String page, String dname);
-	public void printTestPrescription(String pname,String page, String dname);
-	public void clearMedicinePrescription();
-	public void clearTestPrescription();
-	public void keepCustomerSummary(String pname);
+	public void printUpgradeList(String customerName,String page, String tecName);
+	public void printTestPrescription(String customerName,String page, String tecName);
+	public void clearUpgradeNextFix();
+	public void clearUpgradeTestNextFix();
+	public void keepCustomerSummary(String customerName);
 }
